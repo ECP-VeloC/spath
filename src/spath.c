@@ -31,7 +31,7 @@ void* spath_malloc(size_t size, const char* file, int line)
   if (size > 0) {
     ptr = malloc(size);
     if (ptr == NULL) {
-      fprintf(stderr, "Failed to allocate %llu bytes @ %s:%d", file, line);
+      fprintf(stderr, "Failed to allocate %llu bytes @ %s:%d", (unsigned long long) size, file, line);
     }
   }
   return ptr;
@@ -196,7 +196,7 @@ static int spath_elem_insert(spath* path, int offset, spath_elem* elem)
 
   /* check that offset is in range */
   if (offset < 0 || offset > path->components) {
-    fprintf(stderr, "Offset %d is out of range @ %s:%d",
+    fprintf(stderr, "Offset %d is out of range of [0,%d] @ %s:%d",
       offset, path->components, __FILE__, __LINE__
     );
   }
@@ -590,7 +590,7 @@ size_t spath_strcpy(char* buf, size_t n, const spath* path)
   /* if user buffer is too small, abort */
   if (n < strlen) {
     fprintf(stderr, "User buffer of %d bytes is too small to hold string of %d bytes @ %s:%d",
-      n, strlen, __FILE__, __LINE__
+      (int)n, (int)strlen, __FILE__, __LINE__
     );
   }
 
