@@ -9,6 +9,9 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR} ${PROJECT_BINARY_DIR})
 LIST(APPEND libspath_install_headers
 	spath.h
 )
+IF(MPI)
+    LIST(APPEND libspath_install_headers spath_mpi.h)
+ENDIF(MPI)
 INSTALL(FILES ${libspath_install_headers} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 LIST(APPEND libspath_srcs
