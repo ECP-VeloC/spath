@@ -694,6 +694,7 @@ static int spath_combine(spath* path1, int offset, spath** ptr_path2)
     fprintf(stderr, "Cannot attach a path to a NULL path @ %s:%d",
       __FILE__, __LINE__
     );
+    return SPATH_FAILURE;
   }
 
   return SPATH_SUCCESS;
@@ -716,6 +717,7 @@ int spath_insert(spath* path1, int offset, const spath* path2)
     fprintf(stderr, "Cannot attach a path to a NULL path @ %s:%d",
       __FILE__, __LINE__
     );
+    return SPATH_FAILURE;
   }
   return rc;
 }
@@ -737,6 +739,7 @@ int spath_append(spath* path1, const spath* path2)
     fprintf(stderr, "Cannot attach a path to a NULL path @ %s:%d",
       __FILE__, __LINE__
     );
+    return SPATH_FAILURE;
   }
   return rc;
 }
@@ -753,6 +756,7 @@ int spath_insert_str(spath* path, int offset, const char* str)
     fprintf(stderr, "Cannot insert string to a NULL path @ %s:%d",
       __FILE__, __LINE__
     );
+    return SPATH_FAILURE;
   }
 
   /* create a path from this string */
@@ -761,6 +765,7 @@ int spath_insert_str(spath* path, int offset, const char* str)
     fprintf(stderr, "Failed to allocate path for insertion @ %s:%d",
       __FILE__, __LINE__
     );
+    return SPATH_FAILURE;
   }
 
   /* attach newpath to original path */
@@ -785,6 +790,7 @@ int spath_append_str(spath* path, const char* str)
     fprintf(stderr, "Cannot attach string to a NULL path @ %s:%d",
       __FILE__, __LINE__
     );
+    return SPATH_FAILURE;
   }
   return rc;
 }
@@ -905,8 +911,23 @@ int spath_slice(spath* path, int offset, int length)
     return SPATH_SUCCESS;
   }
 
-  /* force offset into range */
   int components = path->components;
+  offset = (offset >= 0) ? offset : (offset + components);
+  if(offset < 0 || offset > components){
+    fprintf(stderr, "starting index not in range of components @ %s:%d",
+      __FILE__, __LINE__
+    );
+    return SPATH_FAILURE;
+  }
+  if(length >= 0 && (offset + length) > components){
+    fprintf(stderr, "(offset + length) > components @ %s:%d",
+      __FILE__, __LINE__
+    );
+    return SPATH_FAILURE;
+  }
+
+  /* force offset into range */
+//  int components = path->components;
   if (components > 0) {
     while (offset < 0) {
       offset += components;
@@ -1006,8 +1027,23 @@ spath* spath_sub(spath* path, int offset, int length)
     return NULL;
   }
 
-  /* force offset into range */
   int components = path->components;
+  offset = (offset >= 0) ? offset : (offset + components);
+  if(offset < 0 || offset > components){
+    fprintf(stderr, "starting index not in range of components @ %s:%d",
+      __FILE__, __LINE__
+    );
+    return NULL;
+  }
+  if(length >= 0 && (offset + length) > components){
+    fprintf(stderr, "(offset + length) > components @ %s:%d",
+      __FILE__, __LINE__
+    );
+    return NULL;
+  }
+
+  /* force offset into range */
+  //int components = path->components;
   if (components > 0) {
     while (offset < 0) {
       offset += components;
@@ -1360,14 +1396,19 @@ int spath_is_child(const spath* parent, const spath* child)
 }
 
 /* compute and return relative path from src to dst */
-spath* spath_relative(const spath* src, const spath* dst)
+spath* spath_relative(const spath* const_src, const spath* const_dst)
 {
   /* check that we don't have NULL pointers */
-  if (src == NULL || dst == NULL) {
+  if (const_src == NULL || const_dst == NULL) {
     fprintf(stderr, "Either src or dst pointer is NULL @ %s:%d",
       __FILE__, __LINE__
     );
   }
+
+  spath* src = spath_dup(const_src);
+  spath* dst = spath_dup(const_dst);
+  spath_reduce(src);
+  spath_reduce(dst);
 
   /* we can't get to a NULL path from a non-NULL path */
   int src_components = src->components;
@@ -1455,3 +1496,36 @@ int spath_is_writeable(const spath* file)
   return rc;
 }
 #endif
+
+//#ifndef HIDE_TV
+/*
+=========================================
+Pretty print for TotalView debug window
+=========================================
+*/
+
+/* This enables a nicer display when diving on a path variable
+ * under the TotalView debugger.  It requires TV 8.8 or later. */
+
+//#include "tv_data_display.h"
+
+//static int TV_ttf_display_type(const spath* path)
+//{
+//  if (path == NULL) {
+    /* empty path, nothing to display here */
+//    return TV_ttf_format_ok;
+//  }
+
+//  if (spath_is_null(path)) {
+    /* empty path, nothing to display here */
+//    return TV_ttf_format_ok;
+//  }
+
+  /* print path in string form */
+//  char* str = spath_strdup(path);
+//  TV_ttf_add_row("path", TV_ttf_type_ascii_string, str);
+//  spath_free(&str);
+
+//  return TV_ttf_format_ok;
+//}
+//#endif /* HIDE_TV */

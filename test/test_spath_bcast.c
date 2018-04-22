@@ -9,8 +9,7 @@
 #define TEST_FAIL (1)
 
 int main(int argc, char** argv){
-  int rc = TEST_PASS;
-  int rank, ranks, kvtree_rc;
+  int rank, ranks;
   spath *sp, *sp_bcast;
   char buff[100], init_path[100], final_buff[100];
   MPI_Init(&argc, &argv);
@@ -30,15 +29,28 @@ printf("spath from rank %d :%s\n", rank, buff);
   else{
     sp_bcast = spath_new();
   }
-  rc = spath_bcast(sp_bcast, 1, MPI_COMM_WORLD);
+  int bcast_rc = spath_bcast(sp_bcast, 1, MPI_COMM_WORLD);
+  if(bcast_rc != SPATH_SUCCESS){
+    printf ("Error in line %d, file %s, function %s.\n", __LINE__, __FILE__, __func__);
+    printf("test_spath_bcast failed, spath_bcast call failed for rank: %d\n", rank);
+    return TEST_FAIL;
+  }
+
   spath_strcpy(final_buff,100, sp_bcast);
   printf(" final spath from rank %d :%s\n", rank, final_buff);
   if(strcmp(final_buff, "initial spath for rank 1") != 0){
-    printf("spath_bcast failed for rank: %d\n", rank);
-    rc = TEST_FAIL;
+    printf ("Error in line %d, file %s, function %s.\n", __LINE__, __FILE__, __func__);
+    printf("spath_bcast_test failed, wrong spath value for rank: %d\n", rank);
+    return TEST_FAIL;
+  }
+// perform a bad argument test
+  bcast_rc = spath_bcast(NULL, 1, MPI_COMM_WORLD);
+  if(bcast_rc == SPATH_SUCCESS){
+    printf ("Error in line %d, file %s, function %s.\n", __LINE__, __FILE__, __func__);
+    printf("test_spath_bcast failed, spath_bcast call succeded with NULL argument for rank: %d\n", rank);
+    return TEST_FAIL;
   }
 
-
   MPI_Finalize();
-  return rc;
+  return TEST_PASS;
 }

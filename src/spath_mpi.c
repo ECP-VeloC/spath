@@ -23,11 +23,15 @@ Functions to send/recv paths with MPI
  * receivers must pass in a newly allocated path from spath_new() */
 int spath_bcast(spath* path, int root, MPI_Comm comm)
 {
-  /* if pointer is NULL, throw an error */
+  int need_to_abort = 0;
+  /* if pointer is NULL, throw an error and flag a need to abort*/
   if (path == NULL) {
-    fprintf(stderr, "NULL pointer passed for path @ %s:%d",
+    fprintf(stderr, "NULL pointer passed for path @ %s:%d\n",
       __FILE__, __LINE__
     );
+    return SPATH_FAILURE; 
+  }
+  if(need_to_abort != 0){
     MPI_Abort(comm, -1);
   }
 
