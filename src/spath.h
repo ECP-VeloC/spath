@@ -1,14 +1,3 @@
-/*
- * Copyright (c) 2009, Lawrence Livermore National Security, LLC.
- * Produced at the Lawrence Livermore National Laboratory.
- * Written by Adam Moody <moody20@llnl.gov>.
- * LLNL-CODE-411039.
- * All rights reserved.
- * This file is part of The Scalable Checkpoint / Restart (SCR) library.
- * For details, see https://sourceforge.net/projects/scalablecr/
- * Please also read this file: LICENSE.TXT.
-*/
-
 /* All rights reserved. This program and the accompanying materials
  * are made available under the terms of the BSD-3 license which accompanies this
  * distribution in LICENSE.TXT
