@@ -25,6 +25,11 @@
 #include <stdarg.h>
 #include <sys/types.h>
 
+/* enable C++ codes to include this header directly */
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define SPATH_SUCCESS (0)
 #define SPATH_FAILURE (1)
 
@@ -209,5 +214,10 @@ int spath_is_child(const spath* parent, const spath* child);
 
 /* compute and return relative path from src to dst */
 spath* spath_relative(const spath* src, const spath* dst);
+
+/* enable C++ codes to include this header directly */
+#ifdef __cplusplus
+} /* extern "C" */
+#endif
 
 #endif /* SPATH_H */

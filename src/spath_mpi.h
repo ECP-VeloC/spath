@@ -5,6 +5,11 @@
 
 #include "spath.h"
 
+/* enable C++ codes to include this header directly */
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #if 0
 /* send/recv path, recv_path should be from spath_new() */
 int spath_sendrecv(
@@ -18,5 +23,10 @@ int spath_sendrecv(
 
 /* broadcast path, path should be from spath_new() on non-roots */
 int spath_bcast(spath* path, int root, MPI_Comm comm);
+
+/* enable C++ codes to include this header directly */
+#ifdef __cplusplus
+} /* extern "C" */
+#endif
 
 #endif /* SPATH_MPI_H */
