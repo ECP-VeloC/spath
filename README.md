@@ -3,9 +3,9 @@ The spath libary defines a data structure and a number of functions to manipulat
 including combining, slicing, simplification,
 computing relative paths, and converting to/from character strings.
 
-For a quick intro, see [doc/rst/spath.rst]().
+For a quick intro, see [doc/rst/spath.rst](doc/rst/spath.rst).
 
-For full documentation, refer to [src/spath.h]().
+For full documentation, refer to [src/spath.h](src/spath.h).
 
 ## Release
 
@@ -15,6 +15,6 @@ Produced at the Lawrence Livermore National Laboratory.
 Copyright (c) 2018, UChicago Argonne LLC, operator of Argonne National Laboratory.
 
 
-For release details and restrictions, please read the [LICENSE]() and [NOTICE]() files.
+For release details and restrictions, please read the [LICENSE](LICENSE) and [NOTICE](NOTICE) files.
 
 `LLNL-CODE-751725` `OCEC-18-060`
