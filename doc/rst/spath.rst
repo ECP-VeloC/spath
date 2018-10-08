@@ -76,7 +76,7 @@ it excludes the terminating NULL character.
 One can convert a path and return it as a newly allocated character string::
 
     char* str = spath_strdup(path);
-    spath_free(&str);
+    free(str);
 
 The caller is responsible for freeing the returned string.
 
@@ -163,7 +163,7 @@ Since it is common to start from a string, reduce the path, and convert back to 
 there is a shortcut that allocates a new, reduced path as a string::
 
     char* reduced_str = spath_strdup_reduce_str(str);
-    spath_free(&reduced_str);
+    free(reduced_str);
 
 The caller is responsible for freeing the returned string.
 
