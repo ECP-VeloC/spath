@@ -1,3 +1,11 @@
+## Overview
+The spath libary defines a data structure and a number of functions to manipulate paths,
+including combining, slicing, simplification,
+computing relative paths, and converting to/from character strings.
+
+For a quick intro, see [doc/rst/spath.rst]().
+
+For full documentation, refer to [src/spath.h]().
 
 ## Release
 
