@@ -1,9 +1,7 @@
 #include "mpi.h"
 
-//#include "scr.h"
-//#include "scr_err.h"
 #include "spath.h"
-//#include "scr_util.h"
+#include "spath_util.h"
 
 #include <stdio.h>
 #include <stdlib.h>
