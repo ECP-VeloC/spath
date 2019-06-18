@@ -18,16 +18,6 @@ OPTION(SPATH_LINK_STATIC "Default to static linking? (Needed for Cray)" OFF)
 
 # Find Packages & Files
 
-LIST(APPEND libspath_srcs
-    spath.c
-)
-LIST(APPEND libspath_srcs
-    spath_util.c
-)
-IF(MPI)
-    LIST(APPEND libspath_srcs spath_mpi.c)
-ENDIF(MPI)
-
 LIST(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 
 ## MPI

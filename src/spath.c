@@ -13,21 +13,6 @@
 
 #include <stdint.h>
 
-/* allocate size bytes, returns NULL if size == 0,
- * calls er_abort if allocation fails */
-//void* spath_malloc(size_t size, const char* file, int line)
-//{
-//  void* ptr = NULL;
-//  if (size > 0) {
-//    ptr = malloc(size);
-//    if (ptr == NULL) {
-//      fprintf(stderr, "Failed to allocate %llu bytes @ %s:%d", (unsigned long long) size, file, line);
-//    }
-//  }
-//  return ptr;
-//}
-//#define SPATH_MALLOC(X) spath_malloc(X, __FILE__, __LINE__);
-
 /* caller really passes in a void**, but we define it as just void* to avoid printing
  * a bunch of warnings */
 void spath_free(void* p)
