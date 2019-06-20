@@ -51,7 +51,6 @@ ADD_SUBDIRECTORY(src)
 
 INCLUDE(CTest)
 ADD_SUBDIRECTORY(test)
-#ADD_DEFINITION(-DHIDE_TV=1)
 
 # Generate config.h with all our build #defs
 CONFIGURE_FILE(${PROJECT_SOURCE_DIR}/cmake/config.h.in ${PROJECT_BINARY_DIR}/config.h)
