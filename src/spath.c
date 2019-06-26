@@ -1,6 +1,7 @@
 /* Defines a double linked list representing a file path. */
 
 #include "spath.h"
+#include "spath_util.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,21 +12,6 @@
 #include <errno.h>
 
 #include <stdint.h>
-
-/* allocate size bytes, returns NULL if size == 0,
- * calls er_abort if allocation fails */
-void* spath_malloc(size_t size, const char* file, int line)
-{
-  void* ptr = NULL;
-  if (size > 0) {
-    ptr = malloc(size);
-    if (ptr == NULL) {
-      fprintf(stderr, "Failed to allocate %llu bytes @ %s:%d", (unsigned long long) size, file, line);
-    }
-  }
-  return ptr;
-}
-#define SPATH_MALLOC(X) spath_malloc(X, __FILE__, __LINE__);
 
 /* caller really passes in a void**, but we define it as just void* to avoid printing
  * a bunch of warnings */
@@ -1412,36 +1398,3 @@ int spath_is_writeable(const spath* file)
   return rc;
 }
 #endif
-
-#ifndef HIDE_TV
-/*
-=========================================
-Pretty print for TotalView debug window
-=========================================
-*/
-
-/* This enables a nicer display when diving on a path variable
- * under the TotalView debugger.  It requires TV 8.8 or later. */
-
-#include "tv_data_display.h"
-
-static int TV_ttf_display_type(const spath* path)
-{
-  if (path == NULL) {
-    /* empty path, nothing to display here */
-    return TV_ttf_format_ok;
-  }
-
-  if (spath_is_null(path)) {
-    /* empty path, nothing to display here */
-    return TV_ttf_format_ok;
-  }
-
-  /* print path in string form */
-  char* str = spath_strdup(path);
-  TV_ttf_add_row("path", TV_ttf_type_ascii_string, str);
-  spath_free(&str);
-
-  return TV_ttf_format_ok;
-}
-#endif /* HIDE_TV */
