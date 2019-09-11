@@ -10,7 +10,7 @@ computing relative paths, and converting to/from character strings.
 
 For a quick intro, see [doc/rst/spath.rst](doc/rst/spath.rst).
 
-For full documentation, refer to [src/spath.h](src/spath.h).
+For full documentation, refer to [src/spath.h](src/spath.h) and the [User API docs](https://ecp-veloc.github.io/component-user-docs/group__spath.html).
 
 ## Quickstart
 
