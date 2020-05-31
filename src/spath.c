@@ -10,6 +10,7 @@
 #include <fcntl.h>
 #include <string.h>
 #include <errno.h>
+#include <unistd.h>
 
 #include <stdint.h>
 
@@ -1147,6 +1148,62 @@ spath* spath_cut(spath* path, int offset)
 simplify and resolve functions
 =========================================
 */
+
+/* allocate a new path initialized with current working dir */
+spath* spath_cwd(void)
+{
+  /* get current working directory, let it allocate a string for us */
+  char* cwd = getcwd(NULL, 0);
+  if (cwd == NULL) {
+    fprintf(stderr, "Call to getcwd failed: %s @ %s:%d",
+      strerror(errno), __FILE__, __LINE__
+    );
+    return NULL;
+  }
+
+  /* convert to an spath */
+  spath* path = spath_from_str(cwd);
+
+  /* free current working dir string */
+  spath_free(&cwd);
+  
+  return path;
+}
+
+/* transform given spath object by calling realpath */
+int spath_realpath(spath* path)
+{
+  /* check that we got a path */
+  if (path == NULL) {
+    /* nothing to do in this case */
+    return SPATH_SUCCESS;
+  }
+
+  /* get path in string form */
+  char* path_str = spath_strdup(path);
+
+  /* call realpath to do the work */
+  char* newpath = realpath(path_str, NULL);
+  if (newpath == NULL) {
+    fprintf(stderr, "Call to realpath(`%s', NULL) failed: %s @ %s:%d",
+      path_str, strerror(errno), __FILE__, __LINE__
+    );
+    spath_free(&path_str);
+    return SPATH_FAILURE;
+  }
+
+  /* truncate callers path object */
+  spath_slice(path, 0, 0);
+
+  /* refill it with string from realpath */
+  spath_insert_str(path, 0, newpath);
+
+  /* free memory allocated to us */
+  spath_free(&newpath);
+  spath_free(&path_str);
+
+  return SPATH_SUCCESS;
+}
 
 /* removes consecutive '/', '.', '..', and trailing '/' */
 int spath_reduce(spath* path)

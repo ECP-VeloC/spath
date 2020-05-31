@@ -176,6 +176,12 @@ spath* spath_cut(spath* path, int offset);
 /** \name simplify and resolve functions */
 ///@{
 
+/** allocate a new path initialized with current working dir */
+spath* spath_cwd(void);
+
+/** apply realpath to given path */
+int spath_realpath(spath* path);
+
 /** removes consecutive '/', '.', '..', and trailing '/' */
 int spath_reduce(spath* path);
 
