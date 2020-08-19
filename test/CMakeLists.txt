@@ -5,6 +5,7 @@
 ################
 # Add tests to ctest
 ################
+IF(MPI_FOUND)
 
 ADD_EXECUTABLE(spath_bcast_test test_spath_bcast.c)
 TARGET_LINK_LIBRARIES(spath_bcast_test ${SPATH_EXTERNAL_LIBS} spath)
@@ -16,6 +17,7 @@ TARGET_LINK_LIBRARIES(spath_test ${SPATH_EXTERNAL_LIBS} spath)
 SPATH_ADD_TEST(spath_test 256 "")
 #ADD_TEST(NAME spath_test COMMAND ${MPIEXEC} ${MPIEXEC_NUMPROC_FLAG} 3 ./spath_test)
 
+ENDIF()
 ####################
 # make a verbose "test" target named "check"
 ####################
