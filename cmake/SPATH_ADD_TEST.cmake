@@ -1,9 +1,9 @@
 function(SPATH_ADD_TEST name args outputs)
 
   # job launcher
-  elseif(NOT(${VELOC_RESOURCE_MANAGER}))
+  if(NOT(${VELOC_RESOURCE_MANAGER}))
     set(test_param mpirun -np 1)
-  if(${VELOC_RESOURCE_MANAGER} STREQUAL "NONE")
+  elseif(${VELOC_RESOURCE_MANAGER} STREQUAL "NONE")
     set(test_param mpirun -np 1)
   elseif(${VELOC_RESOURCE_MANAGER} STREQUAL "LSF")
     set(test_param jsrun -r 1)
