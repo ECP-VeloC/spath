@@ -1,8 +1,7 @@
 function(SPATH_ADD_TEST name args outputs)
 
   # job launcher
-  if(NOT(${VELOC_RESOURCE_MANAGER}))
-#    set(test_param mpirun -np 1)
+  if(NOT DEFINED VELOC_RESOURCE_MANAGER)
     set(test_param srun -N 3 -n 3)
   elseif(${VELOC_RESOURCE_MANAGER} STREQUAL "NONE")
     set(test_param mpirun -np 1)
