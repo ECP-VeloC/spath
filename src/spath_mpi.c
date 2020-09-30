@@ -43,6 +43,7 @@ static int spath_assert(int condition, MPI_Comm comm, const char* format, ...)
       va_start(ap, format);
       vfprintf(stderr, format, ap);
       va_end(ap);
+      fflush(stderr);
 
       /* abort */
       MPI_Abort(comm, -1);
@@ -60,7 +61,8 @@ static int spath_assert(int condition, MPI_Comm comm, const char* format, ...)
       va_end(ap);
 
       /* hang, so user can attach a debugger */
-      fprintf(stderr, "Hanging in while(1) ...");
+      fprintf(stderr, "Hanging in while(1) ...\n");
+      fflush(stderr);
       while(1);
     }
   }
@@ -82,6 +84,7 @@ static int spath_assert(int condition, MPI_Comm comm, const char* format, ...)
         va_start(ap, format);
         vfprintf(stderr, format, ap);
         va_end(ap);
+        fflush(stderr);
       }
 
       /* everyone return an error from all ranks */
@@ -99,7 +102,7 @@ int spath_bcast(spath* path, int root, MPI_Comm comm)
 {
   /* if pointer is NULL, throw an error */
   int assert_rc = spath_assert(path != NULL, comm,
-    "NULL pointer passed for path @ %s:%d",
+    "NULL pointer passed for path @ %s:%d\n",
     __FILE__, __LINE__);
   if (assert_rc) {
     return SPATH_FAILURE;
@@ -112,7 +115,7 @@ int spath_bcast(spath* path, int root, MPI_Comm comm)
   /* as a receiver, verify that we were given an empty path */
   int components = spath_components(path);
   assert_rc = spath_assert(rank == root || components == 0, comm,
-    "Non-null path passed as input in receiver to bcast path @ %s:%d",
+    "Non-null path passed as input in receiver to bcast path @ %s:%d\n",
     __FILE__, __LINE__);
   if (assert_rc) {
     return SPATH_FAILURE;
@@ -149,7 +152,7 @@ int spath_bcast(spath* path, int root, MPI_Comm comm)
     str = (char*) SPATH_MALLOC((size_t)bytes);
   }
   assert_rc = spath_assert(str != NULL, comm,
-    "Failed to allocate memory to bcast path @ %s:%d",
+    "Failed to allocate memory to bcast path @ %s:%d\n",
     __FILE__, __LINE__);
   if (assert_rc) {
     return SPATH_FAILURE;
