@@ -14,6 +14,16 @@
 extern "C" {
 #endif
 
+/* how to behave if an spath_assert condition is found to be false */
+typedef enum {
+  SPATH_ASSERT_ABORT = 1, /* print error message and call abort */
+  SPATH_ASSERT_HANG,      /* print error message and hang with while(1) */
+  SPATH_ASSERT_RETURN,    /* execute allreduce to check on all ranks,
+                           * print error message and return failure on all */
+} spath_assert_mode_t;
+
+extern spath_assert_mode_t spath_assert_mode; /* determines how spath_assert behaves on errors */
+
 #if 0
 /** send/recv path, recv_path should be from spath_new() */
 int spath_sendrecv(
