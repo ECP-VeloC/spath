@@ -214,7 +214,7 @@ int main(int argc, char** argv){
   rc = spath_slice(sp, 2,4);
 //  spath_slice(sp, -6,-17);
   spath_strcpy(buff,100, sp);
-printf("slice result is %s\n",buff);
+  printf("slice result is %s\n",buff);
   if(rc != SPATH_SUCCESS || strcmp(buff, "1/2/3/4") != 0 ){
     printf ("Error in line %d, file %s, function %s.\n", __LINE__, __FILE__, __func__);
     printf("test_spath failed, spath_slice() failed \n");
