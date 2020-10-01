@@ -265,7 +265,7 @@ int main(int argc, char** argv){
   sp1 = spath_sub(sp,2,4);
 //  sp1 = spath_sub(sp, -6,-17);
   spath_strcpy(buff,100, sp1);
-printf("sub result is %s\n",buff);
+  printf("sub result is %s\n",buff);
   if(strcmp(buff, "1/2/3/4") != 0 ){
     printf ("Error in line %d, file %s, function %s.\n", __LINE__, __FILE__, __func__);
     printf("test_spath failed, spath_sub() returned wrong path \n");
