@@ -1431,8 +1431,6 @@ spath* spath_relative(const spath* src, const spath* dst)
     dst_elem = dst_elem->next;
   }
 
-  /* free copies of source and destination */
-
   return rel;
 }
 
