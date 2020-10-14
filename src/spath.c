@@ -911,23 +911,8 @@ int spath_slice(spath* path, int offset, int length)
     return SPATH_SUCCESS;
   }
 
-  int components = path->components;
-  offset = (offset >= 0) ? offset : (offset + components);
-  if(offset < 0 || offset > components){
-    fprintf(stderr, "starting index not in range of components @ %s:%d",
-      __FILE__, __LINE__
-    );
-    return SPATH_FAILURE;
-  }
-  if(length >= 0 && (offset + length) > components){
-    fprintf(stderr, "(offset + length) > components @ %s:%d",
-      __FILE__, __LINE__
-    );
-    return SPATH_FAILURE;
-  }
-
   /* force offset into range */
-//  int components = path->components;
+  int components = path->components;
   if (components > 0) {
     while (offset < 0) {
       offset += components;
@@ -1027,23 +1012,8 @@ spath* spath_sub(spath* path, int offset, int length)
     return NULL;
   }
 
-  int components = path->components;
-  offset = (offset >= 0) ? offset : (offset + components);
-  if(offset < 0 || offset > components){
-    fprintf(stderr, "starting index not in range of components @ %s:%d",
-      __FILE__, __LINE__
-    );
-    return NULL;
-  }
-  if(length >= 0 && (offset + length) > components){
-    fprintf(stderr, "(offset + length) > components @ %s:%d",
-      __FILE__, __LINE__
-    );
-    return NULL;
-  }
-
   /* force offset into range */
-  //int components = path->components;
+  int components = path->components;
   if (components > 0) {
     while (offset < 0) {
       offset += components;
@@ -1465,6 +1435,8 @@ spath* spath_relative(const spath* const_src, const spath* const_dst)
     spath_append_str(rel, dst_component);
     dst_elem = dst_elem->next;
   }
+
+  /* free copies of source and destination */
 
   return rel;
 }
