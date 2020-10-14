@@ -1366,7 +1366,7 @@ int spath_is_child(const spath* parent, const spath* child)
 }
 
 /* compute and return relative path from src to dst */
-spath* spath_relative(const spath* const_src, const spath* const_dst)
+spath* spath_relative(const spath* src, const spath* dst)
 {
   /* check that we don't have NULL pointers */
   if (const_src == NULL || const_dst == NULL) {
@@ -1374,11 +1374,6 @@ spath* spath_relative(const spath* const_src, const spath* const_dst)
       __FILE__, __LINE__
     );
   }
-
-  spath* src = spath_dup(const_src);
-  spath* dst = spath_dup(const_dst);
-  spath_reduce(src);
-  spath_reduce(dst);
 
   /* we can't get to a NULL path from a non-NULL path */
   int src_components = src->components;
