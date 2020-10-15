@@ -1369,11 +1369,13 @@ int spath_is_child(const spath* parent, const spath* child)
 spath* spath_relative(const spath* src, const spath* dst)
 {
   /* check that we don't have NULL pointers */
-  if (const_src == NULL || const_dst == NULL) {
+  if (src == NULL || dst == NULL) {
     fprintf(stderr, "Either src or dst pointer is NULL @ %s:%d",
       __FILE__, __LINE__
     );
   }
+  spath_reduce(src);
+  spath_reduce(dst);
 
   /* we can't get to a NULL path from a non-NULL path */
   int src_components = src->components;
