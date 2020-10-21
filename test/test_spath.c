@@ -221,25 +221,31 @@ int main(int argc, char** argv){
     return TEST_FAIL;
   }
 
-//This test has been invalidated by Adam Moody's changes to functionality in Pull Request 6 on Github.
-//  spath_delete(&sp);
-//  sp = spath_from_str("Directory/File/1/2/3/4");
-//  rc = spath_slice(sp,2,5);
+  spath_delete(&sp);
+  sp = spath_from_str("Directory/File/1/2/3/4");
+  rc = spath_slice(sp,2,5);
+  spath_strcpy(buff,100, sp);
+  if(rc != SPATH_SUCCESS || strcmp(buff, "1/2/3/4") != 0 ){
+    printf ("Error in line %d, file %s, function %s.\n", __LINE__, __FILE__, __func__);
+    printf("test_spath failed, spath_slice() with last argument out of range failed \n");
 //  if(rc == SPATH_SUCCESS){
 //    printf ("Error in line %d, file %s, function %s.\n", __LINE__, __FILE__, __func__);
 //    printf("test_spath failed, spath_slice() returned SPATH_SUCCESS when (offset + length) > components \n");
-//    return TEST_FAIL;
-//  }
+    return TEST_FAIL;
+  }
 
-//This test has been invalidated by Adam Moody's changes to functionality in Pull Request 6 on Github.
-//  spath_delete(&sp);
-//  sp = spath_from_str("Directory/File/1/2/3/4");
-//  rc = spath_slice(sp,6,1);
+  spath_delete(&sp);
+  sp = spath_from_str("Directory/File/1/2/3/4");
+  rc = spath_slice(sp,6,1);
+  spath_strcpy(buff,100, sp);
+  if(rc != SPATH_SUCCESS || strcmp(buff, "Directory") != 0 ){
+    printf ("Error in line %d, file %s, function %s.\n", __LINE__, __FILE__, __func__);
+    printf("test_spath failed, spath_slice() with next to last argument out of range failed \n");
 //  if(rc == SPATH_SUCCESS){
 //    printf ("Error in line %d, file %s, function %s.\n", __LINE__, __FILE__, __func__);
 //    printf("test_spath failed, spath_slice() returned SPATH_SUCCESS when starting index not in range \n");
-//    return TEST_FAIL;
-//  }
+    return TEST_FAIL;
+  }
 
   spath_delete(&sp);
   sp = spath_from_str("Dir1/Dir2/Dir3/File");
@@ -274,27 +280,35 @@ int main(int argc, char** argv){
     return TEST_FAIL;
   }
 
-//This test has been invalidated by Adam Moody's changes to functionality in Pull Request 6 on Github.
-//  spath_delete(&sp);
-//  spath_delete(&sp1);
-//  sp = spath_from_str("Directory/File/1/2/3/4");
-//  sp1 = spath_sub(sp,2,5);
+  spath_delete(&sp);
+  spath_delete(&sp1);
+  sp = spath_from_str("Directory/File/1/2/3/4");
+  sp1 = spath_sub(sp,2,5);
+  spath_strcpy(buff,100, sp1);
+    printf ("SPATH_SUB= %s\n",buff);
+  if(rc != SPATH_SUCCESS || strcmp(buff, "1/2/3/4") != 0 ){
+    printf ("Error in line %d, file %s, function %s.\n", __LINE__, __FILE__, __func__);
+    printf("test_spath failed, spath_sub() with last argument out of range failed \n");
 //  if(sp1 != NULL){
 //    printf ("Error in line %d, file %s, function %s.\n", __LINE__, __FILE__, __func__);
 //    printf("test_spath failed, spath_sub() returned NOT NULL when (offset + length) > components \n");
-//    return TEST_FAIL;
-//  }
+    return TEST_FAIL;
+  }
 
-//This test has been invalidated by Adam Moody's changes to functionality in Pull Request 6 on Github.
-//  spath_delete(&sp);
-//  spath_delete(&sp1);
-//  sp = spath_from_str("Directory/File/1/2/3/4");
-//  sp1 = spath_sub(sp,6,1);
+  spath_delete(&sp);
+  spath_delete(&sp1);
+  sp = spath_from_str("Directory/File/1/2/3/4");
+  sp1 = spath_sub(sp,6,1);
+  spath_strcpy(buff,100, sp1);
+    printf ("SPATH_SUB2= %s\n",buff);
+  if(rc != SPATH_SUCCESS || strcmp(buff, "Directory") != 0 ){
+    printf ("Error in line %d, file %s, function %s.\n", __LINE__, __FILE__, __func__);
+    printf("test_spath failed, spath_sub() with next to last argument out of range failed \n");
 //  if(sp1 != NULL){
 //    printf ("Error in line %d, file %s, function %s.\n", __LINE__, __FILE__, __func__);
 //    printf("test_spath failed, spath_sub() returned NOT NULL when starting index not in range \n");
-//    return TEST_FAIL;
-//  }
+    return TEST_FAIL;
+  }
 
   spath_delete(&sp);
   spath_delete(&sp1);
