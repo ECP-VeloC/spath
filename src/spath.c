@@ -1462,7 +1462,8 @@ int spath_is_writeable(const spath* file)
 }
 #endif
 
-//#ifndef HIDE_TV
+#if 0
+#ifndef HIDE_TV
 /*
 =========================================
 Pretty print for TotalView debug window
@@ -1472,25 +1473,26 @@ Pretty print for TotalView debug window
 /* This enables a nicer display when diving on a path variable
  * under the TotalView debugger.  It requires TV 8.8 or later. */
 
-//#include "tv_data_display.h"
+#include "tv_data_display.h"
 
-//static int TV_ttf_display_type(const spath* path)
-//{
-//  if (path == NULL) {
+static int TV_ttf_display_type(const spath* path)
+{
+  if (path == NULL) {
     /* empty path, nothing to display here */
-//    return TV_ttf_format_ok;
-//  }
+    return TV_ttf_format_ok;
+  }
 
-//  if (spath_is_null(path)) {
+  if (spath_is_null(path)) {
     /* empty path, nothing to display here */
-//    return TV_ttf_format_ok;
-//  }
+    return TV_ttf_format_ok;
+  }
 
   /* print path in string form */
-//  char* str = spath_strdup(path);
-//  TV_ttf_add_row("path", TV_ttf_type_ascii_string, str);
-//  spath_free(&str);
+  char* str = spath_strdup(path);
+  TV_ttf_add_row("path", TV_ttf_type_ascii_string, str);
+  spath_free(&str);
 
-//  return TV_ttf_format_ok;
-//}
-//#endif /* HIDE_TV */
+  return TV_ttf_format_ok;
+}
+#endif /* HIDE_TV */
+#endif
