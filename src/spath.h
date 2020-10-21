@@ -225,9 +225,4 @@ spath* spath_relative(const spath* src, const spath* dst);
 } /* extern "C" */
 #endif
 
-/* enable C++ codes to include this header directly */
-#ifdef __cplusplus
-} /* extern "C" */
-#endif
-
 #endif /* SPATH_H */
