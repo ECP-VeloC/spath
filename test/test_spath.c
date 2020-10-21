@@ -348,9 +348,9 @@ int main(int argc, char** argv){
   spath_delete(&sp1);
   sp = spath_from_str("1/2/3");
   sp1 = spath_from_str("1/2/./3/4");
+  spath_reduce(sp1);
   sp_rel = spath_relative(sp,sp1);
   spath_strcpy(buff,100, sp_rel);
-  printf ("sp_rel= %s\n",sp_rel);
   if(strcmp(buff, "4") != 0 ){
     printf ("Error in line %d, file %s, function %s.\n", __LINE__, __FILE__, __func__);
     printf("test_spath failed, spath_is_child() failed \n");

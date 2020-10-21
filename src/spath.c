@@ -1374,8 +1374,6 @@ spath* spath_relative(const spath* src, const spath* dst)
       __FILE__, __LINE__
     );
   }
-  spath_reduce(src);
-  spath_reduce(dst);
 
   /* we can't get to a NULL path from a non-NULL path */
   int src_components = src->components;
