@@ -694,6 +694,7 @@ static int spath_combine(spath* path1, int offset, spath** ptr_path2)
     fprintf(stderr, "Cannot attach a path to a NULL path @ %s:%d",
       __FILE__, __LINE__
     );
+    return SPATH_FAILURE;
   }
 
   return SPATH_SUCCESS;
@@ -716,6 +717,7 @@ int spath_insert(spath* path1, int offset, const spath* path2)
     fprintf(stderr, "Cannot attach a path to a NULL path @ %s:%d",
       __FILE__, __LINE__
     );
+    return SPATH_FAILURE;
   }
   return rc;
 }
@@ -737,6 +739,7 @@ int spath_append(spath* path1, const spath* path2)
     fprintf(stderr, "Cannot attach a path to a NULL path @ %s:%d",
       __FILE__, __LINE__
     );
+    return SPATH_FAILURE;
   }
   return rc;
 }
@@ -753,6 +756,7 @@ int spath_insert_str(spath* path, int offset, const char* str)
     fprintf(stderr, "Cannot insert string to a NULL path @ %s:%d",
       __FILE__, __LINE__
     );
+    return SPATH_FAILURE;
   }
 
   /* create a path from this string */
@@ -761,6 +765,7 @@ int spath_insert_str(spath* path, int offset, const char* str)
     fprintf(stderr, "Failed to allocate path for insertion @ %s:%d",
       __FILE__, __LINE__
     );
+    return SPATH_FAILURE;
   }
 
   /* attach newpath to original path */
@@ -785,6 +790,7 @@ int spath_append_str(spath* path, const char* str)
     fprintf(stderr, "Cannot attach string to a NULL path @ %s:%d",
       __FILE__, __LINE__
     );
+    return SPATH_FAILURE;
   }
   return rc;
 }
@@ -1454,4 +1460,39 @@ int spath_is_writeable(const spath* file)
   spath_free(&file_str);
   return rc;
 }
+#endif
+
+#if 0
+#ifndef HIDE_TV
+/*
+=========================================
+Pretty print for TotalView debug window
+=========================================
+*/
+
+/* This enables a nicer display when diving on a path variable
+ * under the TotalView debugger.  It requires TV 8.8 or later. */
+
+#include "tv_data_display.h"
+
+static int TV_ttf_display_type(const spath* path)
+{
+  if (path == NULL) {
+    /* empty path, nothing to display here */
+    return TV_ttf_format_ok;
+  }
+
+  if (spath_is_null(path)) {
+    /* empty path, nothing to display here */
+    return TV_ttf_format_ok;
+  }
+
+  /* print path in string form */
+  char* str = spath_strdup(path);
+  TV_ttf_add_row("path", TV_ttf_type_ascii_string, str);
+  spath_free(&str);
+
+  return TV_ttf_format_ok;
+}
+#endif /* HIDE_TV */
 #endif
