@@ -55,7 +55,7 @@ typedef struct spath_elem_struct {
 } spath_elem;
 
 /** define the structure for a path object */
-typedef struct {
+typedef struct spath_struct {
   int components;      /* number of components in path */
   size_t chars;        /* number of chars in path */
   spath_elem* head; /* pointer to first element */

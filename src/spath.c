@@ -1462,8 +1462,7 @@ int spath_is_writeable(const spath* file)
 }
 #endif
 
-#if 0
-#ifndef HIDE_TV
+#ifdef HAVE_TV
 /*
 =========================================
 Pretty print for TotalView debug window
@@ -1487,12 +1486,15 @@ static int TV_ttf_display_type(const spath* path)
     return TV_ttf_format_ok;
   }
 
+  /* when last tested, this string needs to be dynamically allocated
+   * but not freed in order for TV to dispaly the correct value */
   /* print path in string form */
+  //char str[2048];
+  //spath_strcpy(str, sizeof(str), path);
   char* str = spath_strdup(path);
   TV_ttf_add_row("path", TV_ttf_type_ascii_string, str);
-  spath_free(&str);
+  //spath_free(&str);
 
   return TV_ttf_format_ok;
 }
-#endif /* HIDE_TV */
-#endif
+#endif /* HAVE_TV */

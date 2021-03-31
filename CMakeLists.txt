@@ -19,6 +19,7 @@ SET(CMAKE_POSITION_INDEPENDENT_CODE ON)
 # Configuration Options
 OPTION(MPI "Enable MPI operations for spaths" ON)
 OPTION(SPATH_LINK_STATIC "Default to static linking? (Needed for Cray)" OFF)
+OPTION(TVDISPLAY "Whether to compile tv_data_display.c for debugging with TotalView C++View" OFF)
 
 # Find Packages & Files
 

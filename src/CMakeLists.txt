@@ -5,6 +5,10 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR} ${PROJECT_BINARY_DIR})
 # LIB SPATH #
 ###########
 
+IF(TVDISPLAY)
+    ADD_DEFINITIONS(-DHAVE_TV)
+ENDIF(TVDISPLAY)
+
 # Install header files
 LIST(APPEND libspath_install_headers
 	spath.h
@@ -19,6 +23,10 @@ LIST(APPEND libspath_noMPI_srcs
     spath.c
     spath_util.c
 )
+IF(TVDISPLAY)
+    LIST(APPEND libspath_noMPI_srcs tv_data_display.c)
+ENDIF(TVDISPLAY)
+
 LIST(APPEND libspath_srcs
     spath.c
     spath_util.c
@@ -26,7 +34,9 @@ LIST(APPEND libspath_srcs
 IF(MPI)
     LIST(APPEND libspath_srcs spath_mpi.c)
 ENDIF(MPI)
-
+IF(TVDISPLAY)
+    LIST(APPEND libspath_srcs tv_data_display.c)
+ENDIF(TVDISPLAY)
 
 # SPATH Library
 ADD_LIBRARY(spath_o OBJECT ${libspath_srcs})
