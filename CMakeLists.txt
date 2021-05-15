@@ -18,8 +18,23 @@ SET(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 # Configuration Options
 OPTION(MPI "Enable MPI operations for spaths" ON)
-OPTION(SPATH_LINK_STATIC "Default to static linking? (Needed for Cray)" OFF)
+MESSAGE(STATUS "MPI: ${MPI}")
+
+OPTION(BUILD_SHARED_LIBS "Whether to build shared libraries" ON)
+MESSAGE(STATUS "BUILD_SHARED_LIBS: ${BUILD_SHARED_LIBS}")
+
+if (BUILD_SHARED_LIBS)
+   OPTION(SPATH_LINK_STATIC "Default to static linking? (Needed for Cray)" OFF)
+else()
+   OPTION(SPATH_LINK_STATIC "Default to static linking? (Needed for Cray)" ON)
+endif()
+MESSAGE(STATUS "SPATH_LINK_STATIC: ${SPATH_LINK_STATIC}")
+
+OPTION(ENABLE_TESTS "Whether to build tests" ON)
+MESSAGE(STATUS "ENABLE_TESTS: ${ENABLE_TESTS}")
+
 OPTION(TVDISPLAY "Whether to compile tv_data_display.c for debugging with TotalView C++View" OFF)
+MESSAGE(STATUS "TVDISPLAY: ${TVDISPLAY}")
 
 # Find Packages & Files
 
