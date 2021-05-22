@@ -11,7 +11,7 @@
 int main(int argc, char** argv){
   int rc;
   spath *sp, *spath_cpy, *sp1, *sp_rel;
-  char buff[100], init_path[100], final_buff[100], *bf;
+  char buff[100], *bf;
 
   sp = NULL;
   //now allocate, sp should no longer be NULL
