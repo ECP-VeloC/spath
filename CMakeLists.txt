@@ -17,7 +17,7 @@ SET(CMAKE_POSITION_INDEPENDENT_CODE ON)
 #SET(CMAKE_C_FLAGS "-Wall")
 
 # Configuration Options
-OPTION(MPI "Enable MPI operations for spaths" ON)
+OPTION(MPI "Enable MPI operations for spath" ON)
 MESSAGE(STATUS "MPI: ${MPI}")
 
 OPTION(BUILD_SHARED_LIBS "Whether to build shared libraries" ON)
@@ -52,15 +52,6 @@ IF(MPI)
         MESSAGE("         Or force CMake to build using the correct compiler (`export CC=mpicc`)")
   ENDIF(MPI_C_FOUND)
 ENDIF(MPI)
-
-## ZLIB
-FIND_PACKAGE(ZLIB REQUIRED)
-IF(ZLIB_FOUND)
-	INCLUDE_DIRECTORIES(${ZLIB_INCLUDE_DIRS})
-	LIST(APPEND SPATH_EXTERNAL_LIBS ${ZLIB_LIBRARIES})
-	LIST(APPEND SPATH_SERIAL_LIBS ${ZLIB_LIBRARIES})
-	LIST(APPEND SPATH_LINK_LINE "-lz")
-ENDIF(ZLIB_FOUND)
 
 ## HEADERS
 INCLUDE(CheckIncludeFile)
