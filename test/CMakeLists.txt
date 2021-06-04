@@ -8,9 +8,9 @@
 IF(MPI_FOUND)
 
 IF(SPATH_LINK_STATIC)
-   SET(spath_lib spath-static)
+    SET(spath_lib spath-static)
 ELSE()
-   SET(spath_lib spath)
+    SET(spath_lib spath)
 ENDIF()
 
 ADD_EXECUTABLE(spath_bcast_test test_spath_bcast.c)
