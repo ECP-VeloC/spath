@@ -1,6 +1,6 @@
 # spath
 
-[![Build Status](https://api.travis-ci.org/ECP-VeloC/spath.png?branch=master)](https://travis-ci.org/ECP-VeloC/spath)
+[![Build Status](https://api.travis-ci.org/ECP-VeloC/spath.png?branch=main)](https://travis-ci.org/ECP-VeloC/spath)
 
 ## Overview
 
