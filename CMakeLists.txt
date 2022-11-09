@@ -1,5 +1,5 @@
-PROJECT(SPATH)
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.14)
+PROJECT(SPATH VERSION 0.2.0)
 
 # Mac rpath Policy
 IF(POLICY CMP0042)
@@ -43,16 +43,13 @@ LIST(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 ## MPI
 IF(MPI)
     INCLUDE(SetupMPI)
-    IF(MPI_C_FOUND)
-        INCLUDE_DIRECTORIES(${MPI_C_INCLUDE_PATH})
-        LIST(APPEND SPATH_EXTERNAL_LIBS ${MPI_C_LIBRARIES})
-    ELSE(MPI_C_FOUND)
+    IF(NOT MPI_C_FOUND)
         MESSAGE(FATAL_ERROR
             "Could not find MPI! "
             "Either add an MPI compiler to your path "
             "or force CMake to build using the correct compiler (`export CC=mpicc`). "
             "To disable MPI, set -DMPI=OFF")
-    ENDIF(MPI_C_FOUND)
+    ENDIF(NOT MPI_C_FOUND)
 ENDIF(MPI)
 
 ## HEADERS
@@ -60,7 +57,6 @@ INCLUDE(CheckIncludeFile)
 INCLUDE(GNUInstallDirs)
 
 # Subdirectories
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/src)
 ADD_SUBDIRECTORY(src)
 
 IF(ENABLE_TESTS)
@@ -74,8 +70,21 @@ ENDIF(ENABLE_TESTS)
 CONFIGURE_FILE(${PROJECT_SOURCE_DIR}/cmake/config.h.in ${PROJECT_BINARY_DIR}/config.h)
 SET_SOURCE_FILES_PROPERTIES(${PROJECT_BINARY_DIR}/config.h PROPERTIES GENERATED TRUE)
 
-# Special Install Files
-# INSTALL(FILES README.md DESTINATION ${CMAKE_INSTALL_DATADIR}/kvtree)
+# CMake configs
+
+# Install the exports file
+INSTALL(EXPORT spathTargets FILE spathTargets.cmake NAMESPACE spath:: DESTINATION share/spath/cmake)
+
+# Export so we can use in-tree
+EXPORT(EXPORT spathTargets NAMESPACE spath:: FILE spathTargets.cmake)
+
+# Setup the package config
+INCLUDE(CMakePackageConfigHelpers)
+CONFIGURE_PACKAGE_CONFIG_FILE(cmake/spathConfig.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/spathConfig.cmake INSTALL_DESTINATION share/spath/cmake)
+WRITE_BASIC_PACKAGE_VERSION_FILE(${CMAKE_CURRENT_BINARY_DIR}/spathConfigVersion.cmake COMPATIBILITY SameMajorVersion)
+
+# Install package config
+INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/spathConfig.cmake ${CMAKE_CURRENT_BINARY_DIR}/spathConfigVersion.cmake DESTINATION share/spath/cmake)
 
 # Package
 SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "SPATH Path manipulation functions")
