@@ -1,0 +1,9 @@
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+
+if (@MPI@)
+  find_dependency(MPI REQUIRED)
+endif()
+
+include("${CMAKE_CURRENT_LIST_DIR}/spathTargets.cmake")
