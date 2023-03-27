@@ -16,15 +16,16 @@ jobs:
         os: [ubuntu-latest, macos-latest]
         target: [Debug, Release]
         mpi: [seq, par]
+        static: [both, static]
 
-    name: ${{ matrix.os }}-${{ matrix.target }}-${{ matrix.mpi }}
+    name: ${{ matrix.os }}-${{ matrix.target }}-${{ matrix.mpi }}-${{ matrix.static }}
 
     runs-on: ${{ matrix.os }}
 
     steps:
 
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: spath
           fetch-depth: 0
@@ -35,16 +36,20 @@ jobs:
           os: ${{ matrix.os }}
           mpi: ${{ matrix.mpi }}
 
-      - name: build static
-        uses: ecp-veloc/github-actions/cmake-build-static@main
+      - name: configure
+        uses: ecp-veloc/github-actions/cmake-configure@main
         with:
           component: spath
           target: ${{ matrix.target }}
           cmake_line: "-DMPI=${{ matrix.mpi == 'par' }}"
+          static: ${{ matrix.static == 'static' }}
 
-      - name: build and test
-        uses: ecp-veloc/github-actions/cmake-build-test@main
+      - name: build
+        uses: ecp-veloc/github-actions/cmake-build@main
         with:
           component: spath
-          target: ${{ matrix.target }}
-          cmake_line: "-DMPI=${{ matrix.mpi == 'par' }}"
+
+      - name: test
+        uses: ecp-veloc/github-actions/cmake-test@main
+        with:
+          component: spath
