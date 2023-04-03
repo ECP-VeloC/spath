@@ -12,7 +12,7 @@ extern "C" {
 #define SPATH_SUCCESS (0)
 #define SPATH_FAILURE (1)
 
-#define SPATH_VERSION "0.2.0"
+#define SPATH_VERSION "0.3.0"
 
 /* TODO: for formatted strings, use special %| character (or something
  * similar) to denote directories in portable way */
